@@ -1,1 +1,31 @@
-<p>produit works!</p>
+<form #myForm="ngForm">
+    <table align="center" cellpadding="4" cellspacing="4">
+     <tr> <td>Produit</td><td><input [(ngModel)]="titre" appForbiddenName="acide"
+    #ntitre="ngModel" pattern="[A-Z a-z0-9]{1,20}" name="produit" type="text" class="form-control" required></td></tr>
+     <tr> <td>Prix</td><td><input name="prix" [(ngModel)]="prix" #nprix="ngModel" type="number" class="form-control" required></td></tr>
+     <tr> <td>Quantité</td><td><input name="quantite" [(ngModel)]="quantite" class="form-control" #nquantite="ngModel" min="1" max="5" pattern="[0-9]" class="formcontrol" required></td></tr>
+     <tr> <td><input value="valider" [disabled]="myForm.invalid" (click)="taxe()" class="btn btn-primary" type="submit"></td><td><input value="vider" class="btn btn-dark" type="reset"></td></tr>
+    </table>
+    <span class="alert alert-info" *ngIf="taxes>0">
+        Votre taxe est de : {{taxes}}
+
+
+    </span>
+    </form>
+    <div *ngIf="ntitre.invalid && (ntitre.dirty || ntitre.touched)" class="alert alert-danger">
+     <div *ngIf="ntitre.errors.required">
+     Titre obligatoire.
+     </div>
+     <div *ngIf="ntitre.errors.pattern">
+     le titre ne peux contenir que des chiffre ou des lettres
+     </div>
+     <div *ngIf="ntitre.errors.forbiddenName">
+     le titre ne peux pas être acide
+     </div></div><br>
+    <div *ngIf="nprix.invalid && (nprix.dirty || nprix.touched)" class="alert alert-warning">
+     <div *ngIf="nprix.errors.required">
+    le prix est obligatoire </div>
+     <div *ngIf="nprix.errors.pattern">
+     le prix doit être numérique et ne doit peux pas être inférieur à 1
+     </div>
+     </div>
